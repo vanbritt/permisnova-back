@@ -57,13 +57,15 @@ public class AccountRestController {
         DateFormat dateFormat= new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
         String strDate= user.getEmail() + dateFormat.format(date).trim();
         
-        user.setPassword(strDate.replaceAll("-", "").replaceAll("/", ""));
+        user.setPassword(strDate.replaceAll("-", "").replaceAll("/", "").replaceAll(":","").replaceAll(".com", ""));
         
         try {
             mailSenderService.sendHTMLMailAttachment(new HTMLMail(user.getEmail()),user.getFirstname(),user.getLastname(), strDate);
         } catch (MessagingException ex) {
             Logger.getLogger(AccountRestController.class.getName()).log(Level.SEVERE, null, ex);
             System.err.println("Error while sending password to email");
+                        user.setRegisterDate(new Date());
+
         }
         
         accountService.saveUser(user);
@@ -97,16 +99,17 @@ public class AccountRestController {
         Date date= new Date();
         DateFormat dateFormat= new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
         String strDate= user.getEmail() + dateFormat.format(date).trim();
-        
-        user.setPassword(strDate);
-        
+                user.setPassword(strDate.replaceAll("-", "").replaceAll("/", "").replaceAll(":","").replaceAll(".com", ""));
+
+                
         try {
             mailSenderService.sendHTMLMailAttachment(new HTMLMail(user.getEmail()),user.getFirstname(),user.getLastname(), strDate);
+            user.setRegisterDate(new Date());
         } catch (MessagingException ex) {
             Logger.getLogger(AccountRestController.class.getName()).log(Level.SEVERE, null, ex);
             System.err.println("Error while sending password to email");
         }
-
+        
         accountService.saveUser(user);
         accountService.addRoleToUser(registerForm.getEmail(), "MONITOR");
         

@@ -9,6 +9,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,6 +19,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -27,25 +33,31 @@ public class AppUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
-  
+
     @JsonIgnore//use to avoid the recuperation of the password by json
     private String password;
-    
+
     private String firstname;
     private boolean status;
-    
+
     private String lastname;
     private String phone;
-        @Column(unique = true)
+    @Column(unique = true)
     private String email;
     private String department;
-    
-    @ManyToMany(fetch= FetchType.EAGER)
+
+    @Column(name = "register_date")
+    @Temporal(TemporalType.DATE)
+    private Date registerDate;
+
+    @ManyToMany(fetch = FetchType.EAGER)
     private Collection<AppRole> roles = new ArrayList<>();
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "app_user", fetch = FetchType.LAZY)
+    private List<Rendezvouslocation> rendezvouslocationList;
+
     public AppUser() {
-        
+
     }
 
     public AppUser(String email, String password) {
@@ -60,8 +72,6 @@ public class AppUser {
     public void setId(Long id) {
         this.id = id;
     }
-
-  
 
     public String getPassword() {
         return password;
@@ -106,9 +116,7 @@ public class AppUser {
     public void setDepartment(String department) {
         this.department = department;
     }
-    
-    
-    
+
     @JsonSetter
     public void setPassword(String password) {
         this.password = password;
@@ -129,7 +137,23 @@ public class AppUser {
     public void setStatus(boolean status) {
         this.status = status;
     }
+
+    public Date getRegisterDate() {
+        return registerDate;
+    }
+
+    public void setRegisterDate(Date registerDate) {
+        this.registerDate = registerDate;
+    }
+
+    public List<Rendezvouslocation> getRendezvouslocationList() {
+        return rendezvouslocationList;
+    }
+
+    public void setRendezvouslocationList(List<Rendezvouslocation> rendezvouslocationList) {
+        this.rendezvouslocationList = rendezvouslocationList;
+    }
     
     
-    
+
 }

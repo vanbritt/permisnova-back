@@ -39,11 +39,13 @@ public class Rendezvouslocation implements Serializable {
     @Size(max = 254)
     @Column(name = "location")
     private String location;
+    
 //    @OneToMany(mappedBy = "rendezvousLocation", fetch = FetchType.LAZY)
 //    private List<Disponibility> disponibilityList;
-    @JoinColumn(name = "monitor", referencedColumnName = "id")
+    
+    @JoinColumn(name = "app_user", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Monitor monitor;
+    private AppUser monitor;
 
     public Rendezvouslocation() {
     }
@@ -67,6 +69,8 @@ public class Rendezvouslocation implements Serializable {
     public void setLocation(String location) {
         this.location = location;
     }
+ 
+    
 //
 //    public List<Disponibility> getDisponibilityList() {
 //        return disponibilityList;
@@ -75,12 +79,13 @@ public class Rendezvouslocation implements Serializable {
 //    public void setDisponibilityList(List<Disponibility> disponibilityList) {
 //        this.disponibilityList = disponibilityList;
 //    }
+ 
 
-    public Monitor getMonitor() {
+    public AppUser getMonitor() {
         return monitor;
     }
 
-    public void setMonitor(Monitor monitor) {
+    public void setMonitor(AppUser monitor) {
         this.monitor = monitor;
     }
 

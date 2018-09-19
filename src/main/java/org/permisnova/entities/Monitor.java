@@ -49,6 +49,7 @@ public class Monitor implements Serializable {
     @JoinColumn(name = "account", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private AppUser account;
+   
 //    @JoinColumn(name = "autorisation_document", referencedColumnName = "id")
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    private AutorisationDocument autorisationDocument;
@@ -66,8 +67,8 @@ public class Monitor implements Serializable {
 //    private VehicleDocument vehicleDocument;
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "monitor", fetch = FetchType.LAZY)
 //    private List<Disponibility> disponibilityList;
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "monitor", fetch = FetchType.LAZY)
-//    private List<Rendezvouslocation> rendezvouslocationList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "monitor", fetch = FetchType.LAZY)
+    private List<Rendezvouslocation> rendezvouslocationList;
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "monitor", fetch = FetchType.LAZY)
 //    private List<CourseMaterial> courseMaterialList;
 
