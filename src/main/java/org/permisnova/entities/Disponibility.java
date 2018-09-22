@@ -56,7 +56,7 @@ public class Disponibility implements Serializable {
     private String status;
     @JoinColumn(name = "monitor", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Monitor monitor;
+    private AppUser monitor;
     @JoinColumn(name = "rendezvous_location", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Rendezvouslocation rendezvousLocation;
@@ -118,11 +118,11 @@ public class Disponibility implements Serializable {
         this.status = status;
     }
 
-    public Monitor getMonitor() {
+    public AppUser  getMonitor() {
         return monitor;
     }
 
-    public void setMonitor(Monitor monitor) {
+    public void setMonitor(AppUser monitor) {
         this.monitor = monitor;
     }
 

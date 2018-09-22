@@ -11,6 +11,7 @@ import org.permisnova.entities.Rendezvouslocation;
 import org.permisnova.sevice.AccountService;
 import org.permisnova.sevice.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,10 +41,11 @@ public class LocationRestController {
 
     @PostMapping
     Rendezvouslocation save(@RequestBody Rendezvouslocation location) {
-
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         
-        AppUser appUser= accountService.findUserByEmailAndStatus(user.getUsername(),true);
+        System.out.println(location.getLocation());
+        Authentication auth =  SecurityContextHolder.getContext().getAuthentication();
+        
+        AppUser appUser= accountService.findUserByEmailAndStatus(auth.getName(),true);
         location.setMonitor(appUser);
         
         return locationService.save(location);

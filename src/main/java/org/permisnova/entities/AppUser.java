@@ -53,7 +53,7 @@ public class AppUser {
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<AppRole> roles = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "app_user", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "monitor", fetch = FetchType.LAZY)
     private List<Rendezvouslocation> rendezvouslocationList;
 
     public AppUser() {
@@ -63,6 +63,7 @@ public class AppUser {
     public AppUser(String email, String password) {
         this.email = email;
         this.password = password;
+        this.status=true;
     }
 
     public Long getId() {

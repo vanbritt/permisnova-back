@@ -1,4 +1,4 @@
-package org.sid;
+package org.permisnova;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

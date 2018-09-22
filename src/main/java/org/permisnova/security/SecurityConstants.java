@@ -12,7 +12,7 @@ package org.permisnova.security;
 public class SecurityConstants {
 
     public static final String SECRET = "permisnova@gmail.com";//secret use to encode token
-    public static final long EXPIRATION_TIME = 86_400;//10days use to set token expiration time
+    public static final long EXPIRATION_TIME = 86_400_000;//10days use to set token expiration time
     public static final String TOKEN_PREFIX = "Bearer ";
     public static final String HEADER_STRING = "Authorization";
 
