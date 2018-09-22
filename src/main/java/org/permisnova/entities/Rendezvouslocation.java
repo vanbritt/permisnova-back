@@ -5,8 +5,8 @@
  */
 package org.permisnova.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,9 +16,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -43,7 +40,7 @@ public class Rendezvouslocation implements Serializable {
 //    @OneToMany(mappedBy = "rendezvousLocation", fetch = FetchType.LAZY)
 //    private List<Disponibility> disponibilityList;
     
-    @JoinColumn(name = "app_user", referencedColumnName = "id")
+    @JoinColumn(name = "monitor", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private AppUser monitor;
 
@@ -84,7 +81,8 @@ public class Rendezvouslocation implements Serializable {
     public AppUser getMonitor() {
         return monitor;
     }
-
+    
+@JsonIgnore
     public void setMonitor(AppUser monitor) {
         this.monitor = monitor;
     }

@@ -1,7 +1,6 @@
 package org.permisnova;
 
-import org.permisnova.entities.HTMLMail;
-import org.permisnova.entities.SimpleMail;
+import org.permisnova.entities.AppRole;
 //import org.permisnova.entities.Task;
 import org.permisnova.sevice.AccountService;
 import org.permisnova.sevice.MailSenderService;
@@ -45,8 +44,10 @@ public class JwtSpringSecApplication implements CommandLineRunner {
         
 //        accountService.saveUser(new AppUser("admin", "1234"));
 //        accountService.saveUser(new AppUser("user", "1234"));
-//        accountService.saveRole(new AppRole("ADMIN"));
-//        accountService.saveRole(new AppRole("USER"));
+        accountService.saveRole(new AppRole("ADMIN"));
+        accountService.saveRole(new AppRole("STUDENT"));
+                accountService.saveRole(new AppRole("MONITOR"));
+
 //        accountService.addRoleToUser("admin", "ADMIN");
 //        accountService.addRoleToUser("admin", "USER");
 //        accountService.addRoleToUser("user", "USER");

@@ -57,10 +57,12 @@ public class AccountRestController {
         DateFormat dateFormat= new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
         String strDate= user.getEmail() + dateFormat.format(date).trim();
         
-        user.setPassword(strDate.replaceAll("-", "").replaceAll("/", "").replaceAll(":","").replaceAll(".com", ""));
+        String  test=strDate.replaceAll("-", "").replaceAll(" ", "").replaceAll(":","").replaceAll(".com", "");
+                user.setPassword(test);
+        
         
         try {
-            mailSenderService.sendHTMLMailAttachment(new HTMLMail(user.getEmail()),user.getFirstname(),user.getLastname(), strDate);
+            mailSenderService.sendHTMLMailAttachment(new HTMLMail(user.getEmail()),user.getFirstname(),user.getLastname(), test);
         } catch (MessagingException ex) {
             Logger.getLogger(AccountRestController.class.getName()).log(Level.SEVERE, null, ex);
             System.err.println("Error while sending password to email");
@@ -99,11 +101,13 @@ public class AccountRestController {
         Date date= new Date();
         DateFormat dateFormat= new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
         String strDate= user.getEmail() + dateFormat.format(date).trim();
-                user.setPassword(strDate.replaceAll("-", "").replaceAll("/", "").replaceAll(":","").replaceAll(".com", ""));
+        String test=strDate.replaceAll("-", "").replaceAll(" ", "").replaceAll(":","").replaceAll(".com", "");
+                user.setPassword(test);
+                System.out.println(test);
 
                 
         try {
-            mailSenderService.sendHTMLMailAttachment(new HTMLMail(user.getEmail()),user.getFirstname(),user.getLastname(), strDate);
+            mailSenderService.sendHTMLMailAttachment(new HTMLMail(user.getEmail()),user.getFirstname(),user.getLastname(), test);
             user.setRegisterDate(new Date());
         } catch (MessagingException ex) {
             Logger.getLogger(AccountRestController.class.getName()).log(Level.SEVERE, null, ex);
