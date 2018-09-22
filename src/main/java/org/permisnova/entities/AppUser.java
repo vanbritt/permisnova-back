@@ -63,6 +63,7 @@ public class AppUser {
     public AppUser(String email, String password) {
         this.email = email;
         this.password = password;
+        this.status=true;
     }
 
     public Long getId() {
