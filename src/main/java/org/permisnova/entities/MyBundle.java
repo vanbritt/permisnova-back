@@ -44,6 +44,7 @@ public class MyBundle implements Serializable {
     @JoinColumn(name = "bundle", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Bundle bundle;
+    
     @JoinColumn(name = "student", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private AppUser student;

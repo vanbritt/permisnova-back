@@ -1,5 +1,7 @@
 package org.permisnova;
 
+import java.util.TimeZone;
+import javax.annotation.PostConstruct;
 import org.permisnova.entities.AppRole;
 import org.permisnova.entities.AppUser;
 //import org.permisnova.entities.Task;
@@ -17,6 +19,11 @@ public class JwtSpringSecApplication implements CommandLineRunner {
 
 //    @Autowired
 //    private TaskRepository taskRepository;
+    
+    @PostConstruct
+    public void init(){
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+    }
     
     
     @Autowired
@@ -44,12 +51,16 @@ public class JwtSpringSecApplication implements CommandLineRunner {
 //        senderService.sendHTMLMailAttachment(new HTMLMail("tangangbrice@gmail.com"), "1235489");
         
         accountService.saveUser(new AppUser("admin@gmail.com", "admin"));
+                accountService.saveUser(new AppUser("monitor@gmail.com", "monitor"));
+
 //        accountService.saveUser(new AppUser("user", "1234"));
         accountService.saveRole(new AppRole("ADMIN"));
         accountService.saveRole(new AppRole("STUDENT"));
                 accountService.saveRole(new AppRole("MONITOR"));
 
         accountService.addRoleToUser("admin@gmail.com", "ADMIN");
+                accountService.addRoleToUser("monitor@gmail.com", "MONITOR");
+
 //        accountService.addRoleToUser("admin", "USER");
 //        accountService.addRoleToUser("user", "USER");
 //

@@ -55,6 +55,9 @@ public class AppUser {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "monitor", fetch = FetchType.LAZY)
     private List<Rendezvouslocation> rendezvouslocationList;
+    
+       @OneToMany(cascade = CascadeType.ALL, mappedBy = "student", fetch = FetchType.LAZY)
+    private List<MyBundle> myBundleList;
 
     public AppUser() {
 

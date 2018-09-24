@@ -5,11 +5,11 @@
  */
 package org.permisnova.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,13 +18,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -44,22 +40,21 @@ public class Disponibility implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date date;
     @Column(name = "start_time")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIME)
     private Date startTime;
     @Column(name = "end_time")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIME)
     private Date endTime;
     @Column(name = "number_hours")
     private Integer numberHours;
-    @Size(max = 254)
     @Column(name = "status")
-    private String status;
+    private Boolean status;
     @JoinColumn(name = "monitor", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private AppUser monitor;
     @JoinColumn(name = "rendezvous_location", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private Rendezvouslocation rendezvousLocation;
+    private Rendezvouslocation location;
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "disponibility", fetch = FetchType.LAZY)
 //    private List<Reservation> reservationList;
 
@@ -82,6 +77,7 @@ public class Disponibility implements Serializable {
         return date;
     }
 
+    
     public void setDate(Date date) {
         this.date = date;
     }
@@ -89,6 +85,8 @@ public class Disponibility implements Serializable {
     public Date getStartTime() {
         return startTime;
     }
+    @JsonFormat(pattern="HH:mm")    
+//    @JsonFormat(pattern="h:mm a")
 
     public void setStartTime(Date startTime) {
         this.startTime = startTime;
@@ -97,41 +95,45 @@ public class Disponibility implements Serializable {
     public Date getEndTime() {
         return endTime;
     }
-
+    @JsonFormat(pattern="HH:mm")
     public void setEndTime(Date endTime) {
+       
         this.endTime = endTime;
     }
 
     public Integer getNumberHours() {
         return numberHours;
     }
-
+    @JsonIgnore
     public void setNumberHours(Integer numberHours) {
         this.numberHours = numberHours;
     }
 
-    public String getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    @JsonIgnore
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 
     public AppUser  getMonitor() {
         return monitor;
     }
-
+    
+    @JsonIgnore
     public void setMonitor(AppUser monitor) {
         this.monitor = monitor;
     }
 
+    
     public Rendezvouslocation getRendezvousLocation() {
-        return rendezvousLocation;
+        return location;
     }
 
     public void setRendezvousLocation(Rendezvouslocation rendezvousLocation) {
-        this.rendezvousLocation = rendezvousLocation;
+        this.location = rendezvousLocation;
     }
 //
 //    public List<Reservation> getReservationList() {

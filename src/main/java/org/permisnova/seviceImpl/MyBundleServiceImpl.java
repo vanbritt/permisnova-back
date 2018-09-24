@@ -38,7 +38,7 @@ public class MyBundleServiceImpl implements MyBundleService {
 
     @Override
     public void removeCreditFromUserBundle(Bundle bundle, AppUser user, Integer credit) {
-        MyBundle myBundle = myBundleRepository.findMyBundleByBundleAndUserAndStatus(bundle, user, Boolean.TRUE);
+        MyBundle myBundle = myBundleRepository.findMyBundleByBundleAndStudentAndStatus(bundle, user, Boolean.TRUE);
 
         if (myBundle != null && myBundle.getRemainingCredit() > 0) {
             myBundle.setUseCredit(myBundle.getUseCredit() + credit);

@@ -16,6 +16,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface MyBundleRepository extends JpaRepository<MyBundle, Integer> {
     
-    MyBundle findMyBundleByBundleAndUserAndStatus(Bundle bundle,AppUser user, Boolean Status);
+    MyBundle findMyBundleByBundleAndStudentAndStatus(Bundle bundle,AppUser user, Boolean Status);
     
 }
