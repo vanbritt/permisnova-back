@@ -5,6 +5,8 @@
  */
 package org.permisnova.seviceImpl;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.permisnova.dao.RoleRepository;
 import org.permisnova.dao.UserRepository;
 import org.permisnova.entities.AppRole;
@@ -62,5 +64,21 @@ public class AccountServiceImpl implements AccountService {
     public AppUser findUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
+
+    @Override
+    public List<AppUser> findUserByRole(String role) {
+        List<AppUser> users= new ArrayList<>();
+        
+        AppRole r= roleRepository.findByRoleName(role);
+         userRepository.findAll().forEach(u -> {
+        
+                if(u.getRoles().contains((AppRole)r)){
+                    users.add(u);
+                }
+        } );
+        
+         return users;
+        }
+        
 
 }

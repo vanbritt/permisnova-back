@@ -7,6 +7,7 @@ package org.permisnova.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -37,8 +39,8 @@ public class Rendezvouslocation implements Serializable {
     @Column(name = "location")
     private String location;
     
-//    @OneToMany(mappedBy = "rendezvousLocation", fetch = FetchType.LAZY)
-//    private List<Disponibility> disponibilityList;
+    @OneToMany(mappedBy = "location", fetch = FetchType.LAZY)
+    private List<Disponibility> disponibilityList;
     
     @JoinColumn(name = "monitor", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -69,13 +71,13 @@ public class Rendezvouslocation implements Serializable {
  
     
 //
-//    public List<Disponibility> getDisponibilityList() {
-//        return disponibilityList;
-//    }
-//
-//    public void setDisponibilityList(List<Disponibility> disponibilityList) {
-//        this.disponibilityList = disponibilityList;
-//    }
+    public List<Disponibility> getDisponibilityList() {
+        return disponibilityList;
+    }
+
+    public void setDisponibilityList(List<Disponibility> disponibilityList) {
+        this.disponibilityList = disponibilityList;
+    }
  
 
     public AppUser getMonitor() {

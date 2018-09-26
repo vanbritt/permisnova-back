@@ -49,4 +49,11 @@ public class DisponibilityRestController {
         return disponibilityService.save(disponibility);
     }
     
+     @GetMapping("/monitor")
+    public List<Disponibility> findByMonitor(){
+//        return disponibilityService.findByMonitor(monitor, true);
+return disponibilityService.findAll();
+    }
+    
+    
 }

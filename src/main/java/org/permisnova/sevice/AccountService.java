@@ -5,6 +5,7 @@
  */
 package org.permisnova.sevice;
 
+import java.util.List;
 import org.permisnova.entities.AppRole;
 import org.permisnova.entities.AppUser;
 
@@ -23,5 +24,9 @@ public interface AccountService {
     AppUser findUserByEmail(String email);
 
     AppUser findUserByEmailAndStatus(String email, boolean status);
+     
+     List<AppUser> findUserByRole(String Role);
+
+
 
 }

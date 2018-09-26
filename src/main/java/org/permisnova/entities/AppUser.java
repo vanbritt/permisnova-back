@@ -39,11 +39,14 @@ public class AppUser {
 
     private String firstname;
     private boolean status;
-
+    
     private String lastname;
     private String phone;
     @Column(unique = true)
     private String email;
+    
+    private byte[] profile;
+    private String profileName;
     private String department;
 
     @Column(name = "register_date")
@@ -69,6 +72,23 @@ public class AppUser {
         this.status=true;
     }
 
+    public byte[] getProfile() {
+        return profile;
+    }
+
+    public void setProfile(byte[] profile) {
+        this.profile = profile;
+    }
+
+    public String getProfileName() {
+        return profileName;
+    }
+
+    public void setProfileName(String profileName) {
+        this.profileName = profileName;
+    }
+
+    
     public Long getId() {
         return id;
     }

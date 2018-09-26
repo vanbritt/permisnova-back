@@ -5,9 +5,11 @@
  */
 package org.permisnova.web;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.MessagingException;
@@ -16,10 +18,16 @@ import org.permisnova.entities.HTMLMail;
 import org.permisnova.sevice.AccountService;
 import org.permisnova.sevice.MailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -118,6 +126,51 @@ public class AccountRestController {
         accountService.addRoleToUser(registerForm.getEmail(), "MONITOR");
         
         return user;
+    }
+    
+    @PostMapping("/user/profile")
+    public AppUser updateProfile(@RequestParam("file")MultipartFile file) throws IOException{
+           Authentication auth =  SecurityContextHolder.getContext().getAuthentication();
+        
+        AppUser appUser= accountService.findUserByEmailAndStatus(auth.getName(),true);  
+        
+        appUser.setProfile(file.getBytes());
+        appUser.setProfileName(file.getOriginalFilename());
+        
+        accountService.saveUser(appUser);
+        
+        return appUser;
+    }
+    
+    @PostMapping("/user/reset")
+    public AppUser resetPassword(@RequestBody ResetPassword resetPassword){
+        
+          Authentication auth =  SecurityContextHolder.getContext().getAuthentication();
+             AppUser appUser= accountService.findUserByEmailAndStatus(auth.getName(),true);
+
+                        
+       if(BCrypt.checkpw(resetPassword.getOldpassword(), appUser.getPassword())){
+        if((resetPassword.getNewpassword().equals(resetPassword.getRenewpassword()))){
+            appUser.setPassword(resetPassword.getNewpassword());
+            accountService.saveUser(appUser);
+            System.out.println("cool ok");
+             return appUser;    
+        }
+       }
+        
+        return null;
+    }
+    
+    @GetMapping("/user/monitor")
+    public List<AppUser> findMonitors(){
+        
+        return accountService.findUserByRole("MONITOR");
+    }
+    
+     @GetMapping("/user/student")
+    public List<AppUser> findStudents(){
+        
+        return accountService.findUserByRole("STUDENT");
     }
 
 }

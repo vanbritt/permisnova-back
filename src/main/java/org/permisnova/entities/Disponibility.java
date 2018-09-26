@@ -7,6 +7,7 @@ package org.permisnova.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -50,10 +51,10 @@ public class Disponibility implements Serializable {
     @Column(name = "status")
     private Boolean status;
     @JoinColumn(name = "monitor", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private AppUser monitor;
-    @JoinColumn(name = "rendezvous_location", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "location", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.EAGER)
     private Rendezvouslocation location;
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "disponibility", fetch = FetchType.LAZY)
 //    private List<Reservation> reservationList;
@@ -118,6 +119,7 @@ public class Disponibility implements Serializable {
         this.status = status;
     }
 
+    @JsonProperty
     public AppUser  getMonitor() {
         return monitor;
     }

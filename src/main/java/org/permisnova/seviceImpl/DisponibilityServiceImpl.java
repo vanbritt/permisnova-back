@@ -7,6 +7,7 @@ package org.permisnova.seviceImpl;
 
 import java.util.List;
 import org.permisnova.dao.DisponibilityRepository;
+import org.permisnova.entities.AppUser;
 import org.permisnova.entities.Disponibility;
 import org.permisnova.sevice.DisponibilityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,11 @@ public class DisponibilityServiceImpl  implements DisponibilityService{
     @Override
     public Disponibility update(Disponibility disponibility) {
           return  disponibilityRepository.save(disponibility);
+    }
+
+    @Override
+    public List<Disponibility> findByMonitor(AppUser monitor, boolean status) {
+                            return disponibilityRepository.findByMonitorAndStatus(monitor, status);
     }
     
 }

@@ -6,6 +6,7 @@
 package org.permisnova.sevice;
 
 import java.util.List;
+import org.permisnova.entities.AppUser;
 import org.permisnova.entities.Disponibility;
 
 /**
@@ -14,7 +15,10 @@ import org.permisnova.entities.Disponibility;
  */
 public interface DisponibilityService {
 
-    List<Disponibility> findAll();
+    List<Disponibility> findAll();   
+    List<Disponibility> findByMonitor(AppUser monitor, boolean status);
+
+    
 
     Disponibility save(Disponibility disponibility);
 
