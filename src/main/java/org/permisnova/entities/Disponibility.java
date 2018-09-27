@@ -120,12 +120,12 @@ public class Disponibility implements Serializable {
     }
 
     @JsonProperty
-    public AppUser  getMonitor() {
+    public AppUser  getAppUser() {
         return monitor;
     }
     
     @JsonIgnore
-    public void setMonitor(AppUser monitor) {
+    public void setAppUser(AppUser monitor) {
         this.monitor = monitor;
     }
 

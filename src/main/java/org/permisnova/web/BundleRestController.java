@@ -6,13 +6,19 @@
 package org.permisnova.web;
 
 import java.util.List;
+import org.permisnova.entities.AppUser;
 import org.permisnova.entities.Bundle;
+import org.permisnova.sevice.AccountService;
 import org.permisnova.sevice.BundleService;
+import org.permisnova.sevice.MyBundleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -27,11 +33,29 @@ public class BundleRestController {
     @Autowired
     private BundleService bundleService;
     
+    @Autowired
+    private MyBundleService myBundleService;
+    
+    @Autowired
+    private AccountService accountService;
+    
     @PostMapping
     public Bundle save(@RequestBody Bundle bundle){
         if(bundle!=null && bundle.getCode() != null){
            return bundleService.save(bundle);
         }
+        return null;
+    }
+    
+      @PostMapping("/buy")
+    public Bundle buy(@RequestParam("id") Integer id){
+       Bundle bundle = bundleService.finById(id);
+            Authentication auth =  SecurityContextHolder.getContext().getAuthentication();
+        
+        AppUser appUser= accountService.findUserByEmailAndStatus(auth.getName(),true);  
+        
+       myBundleService.addBundleToUser(bundle, appUser);
+       
         return null;
     }
     

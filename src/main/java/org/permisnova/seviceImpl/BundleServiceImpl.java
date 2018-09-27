@@ -6,8 +6,12 @@
 package org.permisnova.seviceImpl;
 
 import java.util.List;
+import java.util.Optional;
 import org.permisnova.dao.BundleRepository;
+import org.permisnova.dao.MyBundleRepository;
+import org.permisnova.entities.AppUser;
 import org.permisnova.entities.Bundle;
+import org.permisnova.entities.MyBundle;
 import org.permisnova.sevice.BundleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +25,9 @@ public class BundleServiceImpl  implements BundleService{
     
     @Autowired 
     private BundleRepository bundleRepository;
+    
+    @Autowired
+    private MyBundleRepository  myBundleRepository;
 
     @Override
     public List<Bundle> findAll() {
@@ -42,5 +49,11 @@ public class BundleServiceImpl  implements BundleService{
             return bundleRepository.save(bundle);
             
     }
-    
+
+    @Override
+    public Bundle finById(Integer id) {
+        Optional<Bundle>bundle= bundleRepository.findById(id);
+                return bundle.get();
+    }
+
 }

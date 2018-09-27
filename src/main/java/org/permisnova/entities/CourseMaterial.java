@@ -5,10 +5,11 @@
  */
 package org.permisnova.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,8 +18,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
 /**
@@ -26,8 +31,8 @@ import javax.validation.constraints.Size;
  * @author vanbritt
  */
 @Entity
-@Table(name = "rendezvouslocation")
-public class Rendezvouslocation implements Serializable {
+@Table(name = "course_material")
+public class CourseMaterial implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -36,20 +41,26 @@ public class Rendezvouslocation implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Size(max = 254)
-    @Column(name = "location")
-    private String location;
-    
-    @OneToMany(mappedBy = "location", fetch = FetchType.LAZY)
-    private List<Disponibility> disponibilityList;
-    
+    @Column(name = "label")
+    private String label;
+    @Column(name = "files")
+    private Short files;
+    @Column(name = "upload_date")
+    @Temporal(TemporalType.DATE)
+    private Date uploadDate;
+    @Column(name = "description")
+    @Temporal(TemporalType.DATE)
+    private Date description;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseMaterial", fetch = FetchType.LAZY)
+    private List<MyCourseMaterial> myCourseMaterialList;
     @JoinColumn(name = "monitor", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private AppUser monitor;
 
-    public Rendezvouslocation() {
+    public CourseMaterial() {
     }
 
-    public Rendezvouslocation(Integer id) {
+    public CourseMaterial(Integer id) {
         this.id = id;
     }
 
@@ -61,30 +72,50 @@ public class Rendezvouslocation implements Serializable {
         this.id = id;
     }
 
-    public String getLocation() {
-        return location;
+    public String getLabel() {
+        return label;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
- 
-    
-//
-    public List<Disponibility> getDisponibilityList() {
-        return disponibilityList;
+    public void setLabel(String label) {
+        this.label = label;
     }
 
-    public void setDisponibilityList(List<Disponibility> disponibilityList) {
-        this.disponibilityList = disponibilityList;
+    public Short getFiles() {
+        return files;
     }
- 
+
+    public void setFiles(Short files) {
+        this.files = files;
+    }
+
+    public Date getUploadDate() {
+        return uploadDate;
+    }
+
+    public void setUploadDate(Date uploadDate) {
+        this.uploadDate = uploadDate;
+    }
+
+    public Date getDescription() {
+        return description;
+    }
+
+    public void setDescription(Date description) {
+        this.description = description;
+    }
+
+    public List<MyCourseMaterial> getMyCourseMaterialList() {
+        return myCourseMaterialList;
+    }
+
+    public void setMyCourseMaterialList(List<MyCourseMaterial> myCourseMaterialList) {
+        this.myCourseMaterialList = myCourseMaterialList;
+    }
 
     public AppUser getAppUser() {
         return monitor;
     }
-    
-@JsonIgnore
+
     public void setAppUser(AppUser monitor) {
         this.monitor = monitor;
     }
@@ -99,10 +130,10 @@ public class Rendezvouslocation implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Rendezvouslocation)) {
+        if (!(object instanceof CourseMaterial)) {
             return false;
         }
-        Rendezvouslocation other = (Rendezvouslocation) object;
+        CourseMaterial other = (CourseMaterial) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -111,7 +142,7 @@ public class Rendezvouslocation implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.test.entities.Rendezvouslocation[ id=" + id + " ]";
+        return "com.mycompany.test.entities.CourseMaterial[ id=" + id + " ]";
     }
     
 }

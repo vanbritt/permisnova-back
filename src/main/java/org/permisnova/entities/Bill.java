@@ -6,6 +6,9 @@
 package org.permisnova.entities;
 
 import java.io.Serializable;
+import java.math.BigInteger;
+import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,15 +20,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
  * @author vanbritt
  */
 @Entity
-@Table(name = "my_bundle")
-public class MyBundle implements Serializable {
+@Table(name = "bill")
+public class Bill implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -33,38 +39,27 @@ public class MyBundle implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "total_credit")
-    private Integer totalCredit;
-    @Column(name = "remaining_credit")
-    private Integer remainingCredit;
-     @Column(name = "use_credit")
-    private Integer useCredit;
+    @Column(name = "total_amount")
+    private BigInteger totalAmount;
+    @Column(name = "date")
+    @Temporal(TemporalType.DATE)
+    private Date date;
     @Column(name = "status")
     private Boolean status;
-    @JoinColumn(name = "bundle", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Bundle bundle;
-    
-    @JoinColumn(name = "student", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private AppUser student;
+    @Column(name = "week")
+    private Integer week;
+    @JoinColumn(name = "bank_account", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private BankAccount bankAccount;
+    @OneToMany(mappedBy = "bill", fetch = FetchType.LAZY)
+    private List<Reservation> reservationList;
 
-    public MyBundle() {
+    public Bill() {
     }
 
-    public MyBundle(Integer id) {
+    public Bill(Integer id) {
         this.id = id;
     }
-
-    public Integer getUseCredit() {
-        return useCredit;
-    }
-
-    public void setUseCredit(Integer useCredit) {
-        this.useCredit = useCredit;
-    }
-    
-    
 
     public Integer getId() {
         return id;
@@ -74,20 +69,20 @@ public class MyBundle implements Serializable {
         this.id = id;
     }
 
-    public Integer getTotalCredit() {
-        return totalCredit;
+    public BigInteger getTotalAmount() {
+        return totalAmount;
     }
 
-    public void setTotalCredit(Integer totalCredit) {
-        this.totalCredit = totalCredit;
+    public void setTotalAmount(BigInteger totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
-    public Integer getRemainingCredit() {
-        return remainingCredit;
+    public Date getDate() {
+        return date;
     }
 
-    public void setRemainingCredit(Integer remainingCredit) {
-        this.remainingCredit = remainingCredit;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public Boolean getStatus() {
@@ -98,20 +93,28 @@ public class MyBundle implements Serializable {
         this.status = status;
     }
 
-    public Bundle getBundle() {
-        return bundle;
+    public Integer getWeek() {
+        return week;
     }
 
-    public void setBundle(Bundle bundle) {
-        this.bundle = bundle;
+    public void setWeek(Integer week) {
+        this.week = week;
     }
 
-    public AppUser getAppUser() {
-        return student;
+    public BankAccount getBankAccount() {
+        return bankAccount;
     }
 
-    public void setAppUser(AppUser student) {
-        this.student = student;
+    public void setBankAccount(BankAccount bankAccount) {
+        this.bankAccount = bankAccount;
+    }
+
+    public List<Reservation> getReservationList() {
+        return reservationList;
+    }
+
+    public void setReservationList(List<Reservation> reservationList) {
+        this.reservationList = reservationList;
     }
 
     @Override
@@ -124,10 +127,10 @@ public class MyBundle implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof MyBundle)) {
+        if (!(object instanceof Bill)) {
             return false;
         }
-        MyBundle other = (MyBundle) object;
+        Bill other = (Bill) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -136,7 +139,7 @@ public class MyBundle implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.test.entities.MyBundle[ id=" + id + " ]";
+        return "com.mycompany.test.entities.Bill[ id=" + id + " ]";
     }
     
 }

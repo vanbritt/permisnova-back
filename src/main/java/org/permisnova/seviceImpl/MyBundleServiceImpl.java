@@ -11,11 +11,14 @@ import org.permisnova.entities.Bundle;
 import org.permisnova.entities.MyBundle;
 import org.permisnova.sevice.MyBundleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author vanbritt
  */
+
+@Service
 public class MyBundleServiceImpl implements MyBundleService {
 
     @Autowired
@@ -25,7 +28,7 @@ public class MyBundleServiceImpl implements MyBundleService {
     public void addBundleToUser(Bundle bundle, AppUser user) {
         MyBundle myBundle = new MyBundle();
 
-        myBundle.setStudent(user);
+        myBundle.setAppUser(user);
         myBundle.setBundle(bundle);
         myBundle.setStatus(Boolean.TRUE);
         myBundle.setTotalCredit(bundle.getCredit());

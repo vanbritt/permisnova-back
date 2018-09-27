@@ -5,18 +5,19 @@
  */
 package org.permisnova.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
@@ -26,8 +27,8 @@ import javax.validation.constraints.Size;
  * @author vanbritt
  */
 @Entity
-@Table(name = "rendezvouslocation")
-public class Rendezvouslocation implements Serializable {
+@Table(name = "webpack")
+public class Webpack implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -35,21 +36,18 @@ public class Rendezvouslocation implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Column(name = "price")
+    private BigInteger price;
     @Size(max = 254)
-    @Column(name = "location")
-    private String location;
-    
-    @OneToMany(mappedBy = "location", fetch = FetchType.LAZY)
-    private List<Disponibility> disponibilityList;
-    
-    @JoinColumn(name = "monitor", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private AppUser monitor;
+    @Column(name = "supplier")
+    private String supplier;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "webpack", fetch = FetchType.LAZY)
+    private List<MyWebpack> myWebpackList;
 
-    public Rendezvouslocation() {
+    public Webpack() {
     }
 
-    public Rendezvouslocation(Integer id) {
+    public Webpack(Integer id) {
         this.id = id;
     }
 
@@ -61,32 +59,28 @@ public class Rendezvouslocation implements Serializable {
         this.id = id;
     }
 
-    public String getLocation() {
-        return location;
+    public BigInteger getPrice() {
+        return price;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
- 
-    
-//
-    public List<Disponibility> getDisponibilityList() {
-        return disponibilityList;
+    public void setPrice(BigInteger price) {
+        this.price = price;
     }
 
-    public void setDisponibilityList(List<Disponibility> disponibilityList) {
-        this.disponibilityList = disponibilityList;
+    public String getSupplier() {
+        return supplier;
     }
- 
 
-    public AppUser getAppUser() {
-        return monitor;
+    public void setSupplier(String supplier) {
+        this.supplier = supplier;
     }
-    
-@JsonIgnore
-    public void setAppUser(AppUser monitor) {
-        this.monitor = monitor;
+
+    public List<MyWebpack> getMyWebpackList() {
+        return myWebpackList;
+    }
+
+    public void setMyWebpackList(List<MyWebpack> myWebpackList) {
+        this.myWebpackList = myWebpackList;
     }
 
     @Override
@@ -99,10 +93,10 @@ public class Rendezvouslocation implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Rendezvouslocation)) {
+        if (!(object instanceof Webpack)) {
             return false;
         }
-        Rendezvouslocation other = (Rendezvouslocation) object;
+        Webpack other = (Webpack) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -111,7 +105,7 @@ public class Rendezvouslocation implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.test.entities.Rendezvouslocation[ id=" + id + " ]";
+        return "com.mycompany.test.entities.Webpack[ id=" + id + " ]";
     }
     
 }

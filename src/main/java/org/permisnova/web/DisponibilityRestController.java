@@ -44,14 +44,14 @@ public class DisponibilityRestController {
             Authentication auth =  SecurityContextHolder.getContext().getAuthentication();
         
         AppUser appUser= accountService.findUserByEmailAndStatus(auth.getName(),true);
-        disponibility.setMonitor(appUser);
+        disponibility.setAppUser(appUser);
         disponibility.setStatus(true);
         return disponibilityService.save(disponibility);
     }
     
      @GetMapping("/monitor")
-    public List<Disponibility> findByMonitor(){
-//        return disponibilityService.findByMonitor(monitor, true);
+    public List<Disponibility> findByAppUser(){
+//        return disponibilityService.findByAppUser(monitor, true);
 return disponibilityService.findAll();
     }
     

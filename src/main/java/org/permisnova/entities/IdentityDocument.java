@@ -5,7 +5,6 @@
  */
 package org.permisnova.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -15,8 +14,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
@@ -26,8 +25,8 @@ import javax.validation.constraints.Size;
  * @author vanbritt
  */
 @Entity
-@Table(name = "rendezvouslocation")
-public class Rendezvouslocation implements Serializable {
+@Table(name = "identity_document")
+public class IdentityDocument implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -35,21 +34,20 @@ public class Rendezvouslocation implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Column(name = "recto")
+    private Short recto;
+    @Column(name = "verso")
+    private Short verso;
     @Size(max = 254)
-    @Column(name = "location")
-    private String location;
-    
-    @OneToMany(mappedBy = "location", fetch = FetchType.LAZY)
-    private List<Disponibility> disponibilityList;
-    
-    @JoinColumn(name = "monitor", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private AppUser monitor;
+    @Column(name = "label")
+    private String label;
+    @OneToMany(mappedBy = "identityDocument", fetch = FetchType.LAZY)
+    private List<AppUser> monitorList;
 
-    public Rendezvouslocation() {
+    public IdentityDocument() {
     }
 
-    public Rendezvouslocation(Integer id) {
+    public IdentityDocument(Integer id) {
         this.id = id;
     }
 
@@ -61,32 +59,36 @@ public class Rendezvouslocation implements Serializable {
         this.id = id;
     }
 
-    public String getLocation() {
-        return location;
+    public Short getRecto() {
+        return recto;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
- 
-    
-//
-    public List<Disponibility> getDisponibilityList() {
-        return disponibilityList;
+    public void setRecto(Short recto) {
+        this.recto = recto;
     }
 
-    public void setDisponibilityList(List<Disponibility> disponibilityList) {
-        this.disponibilityList = disponibilityList;
+    public Short getVerso() {
+        return verso;
     }
- 
 
-    public AppUser getAppUser() {
-        return monitor;
+    public void setVerso(Short verso) {
+        this.verso = verso;
     }
-    
-@JsonIgnore
-    public void setAppUser(AppUser monitor) {
-        this.monitor = monitor;
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public List<AppUser> getAppUserList() {
+        return monitorList;
+    }
+
+    public void setAppUserList(List<AppUser> monitorList) {
+        this.monitorList = monitorList;
     }
 
     @Override
@@ -99,10 +101,10 @@ public class Rendezvouslocation implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Rendezvouslocation)) {
+        if (!(object instanceof IdentityDocument)) {
             return false;
         }
-        Rendezvouslocation other = (Rendezvouslocation) object;
+        IdentityDocument other = (IdentityDocument) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -111,7 +113,7 @@ public class Rendezvouslocation implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.test.entities.Rendezvouslocation[ id=" + id + " ]";
+        return "com.mycompany.test.entities.IdentityDocument[ id=" + id + " ]";
     }
     
 }
