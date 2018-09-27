@@ -1,5 +1,6 @@
 package org.permisnova;
 
+import java.io.File;
 import java.util.TimeZone;
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
@@ -71,9 +72,11 @@ public class JwtSpringSecApplication implements CommandLineRunner {
                 
                  accountService.addRoleToUser("student@gmail.com", "STUDENT");
                 
+                boolean isExist= new File(servletContext.getRealPath("upload-dir")).exists();
                 
-                
+                if(!isExist){
                 storageService.init();
+                }
 
 //        accountService.addRoleToUser("admin", "USER");
 //        accountService.addRoleToUser("user", "USER");
