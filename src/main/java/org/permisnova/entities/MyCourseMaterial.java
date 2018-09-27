@@ -24,8 +24,8 @@ import javax.persistence.Table;
  * @author vanbritt
  */
 @Entity
-@Table(name = "my_bundle")
-public class MyBundle implements Serializable {
+@Table(name = "my_course_material")
+public class MyCourseMaterial implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -33,38 +33,19 @@ public class MyBundle implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "total_credit")
-    private Integer totalCredit;
-    @Column(name = "remaining_credit")
-    private Integer remainingCredit;
-     @Column(name = "use_credit")
-    private Integer useCredit;
-    @Column(name = "status")
-    private Boolean status;
-    @JoinColumn(name = "bundle", referencedColumnName = "id")
+    @JoinColumn(name = "course_material", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Bundle bundle;
-    
+    private CourseMaterial courseMaterial;
     @JoinColumn(name = "student", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private AppUser student;
 
-    public MyBundle() {
+    public MyCourseMaterial() {
     }
 
-    public MyBundle(Integer id) {
+    public MyCourseMaterial(Integer id) {
         this.id = id;
     }
-
-    public Integer getUseCredit() {
-        return useCredit;
-    }
-
-    public void setUseCredit(Integer useCredit) {
-        this.useCredit = useCredit;
-    }
-    
-    
 
     public Integer getId() {
         return id;
@@ -74,36 +55,12 @@ public class MyBundle implements Serializable {
         this.id = id;
     }
 
-    public Integer getTotalCredit() {
-        return totalCredit;
+    public CourseMaterial getCourseMaterial() {
+        return courseMaterial;
     }
 
-    public void setTotalCredit(Integer totalCredit) {
-        this.totalCredit = totalCredit;
-    }
-
-    public Integer getRemainingCredit() {
-        return remainingCredit;
-    }
-
-    public void setRemainingCredit(Integer remainingCredit) {
-        this.remainingCredit = remainingCredit;
-    }
-
-    public Boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(Boolean status) {
-        this.status = status;
-    }
-
-    public Bundle getBundle() {
-        return bundle;
-    }
-
-    public void setBundle(Bundle bundle) {
-        this.bundle = bundle;
+    public void setCourseMaterial(CourseMaterial courseMaterial) {
+        this.courseMaterial = courseMaterial;
     }
 
     public AppUser getAppUser() {
@@ -124,10 +81,10 @@ public class MyBundle implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof MyBundle)) {
+        if (!(object instanceof MyCourseMaterial)) {
             return false;
         }
-        MyBundle other = (MyBundle) object;
+        MyCourseMaterial other = (MyCourseMaterial) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -136,7 +93,7 @@ public class MyBundle implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.test.entities.MyBundle[ id=" + id + " ]";
+        return "com.mycompany.test.entities.MyCourseMaterial[ id=" + id + " ]";
     }
     
 }

@@ -25,7 +25,7 @@ public class MyBundleServiceImpl implements MyBundleService {
     public void addBundleToUser(Bundle bundle, AppUser user) {
         MyBundle myBundle = new MyBundle();
 
-        myBundle.setStudent(user);
+        myBundle.setAppUser(user);
         myBundle.setBundle(bundle);
         myBundle.setStatus(Boolean.TRUE);
         myBundle.setTotalCredit(bundle.getCredit());

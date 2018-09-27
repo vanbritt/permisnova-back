@@ -43,7 +43,7 @@ public class AccountRestController {
     private MailSenderService mailSenderService;
 
     @PostMapping("/register/student")
-    public AppUser registerStudent(@RequestBody RegisterForm registerForm) {
+    public AppUser registerAppUser(@RequestBody RegisterForm registerForm) {
         AppUser user = new AppUser();
 
         AppUser exist = accountService.findUserByEmail(registerForm.getEmail());
@@ -162,13 +162,13 @@ public class AccountRestController {
     }
     
     @GetMapping("/user/monitor")
-    public List<AppUser> findMonitors(){
+    public List<AppUser> findAppUsers(){
         
         return accountService.findUserByRole("MONITOR");
     }
     
      @GetMapping("/user/student")
-    public List<AppUser> findStudents(){
+    public List<AppUser> findMonitors(){
         
         return accountService.findUserByRole("STUDENT");
     }

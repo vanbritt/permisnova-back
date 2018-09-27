@@ -45,7 +45,7 @@ public class DisponibilityServiceImpl  implements DisponibilityService{
     }
 
     @Override
-    public List<Disponibility> findByMonitor(AppUser monitor, boolean status) {
+    public List<Disponibility> findByAppUser(AppUser monitor, boolean status) {
                             return disponibilityRepository.findByMonitorAndStatus(monitor, status);
     }
     

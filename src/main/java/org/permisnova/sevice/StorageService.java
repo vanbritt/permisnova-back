@@ -5,21 +5,21 @@
  */
 package org.permisnova.sevice;
 
-import java.util.List;
-import org.permisnova.entities.AppUser;
+import org.springframework.core.io.Resource;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
  * @author vanbritt
  */
-public interface MonitorService {
+public interface StorageService {
 
-    List<AppUser> findAll();
+    void store(MultipartFile file);
 
-    AppUser save(AppUser monitor);
+    Resource loadFile(String name);
 
-    void delete(Integer id);
+    void deleteAll();
     
-    AppUser update(AppUser monitor);
+    void init();
 
 }

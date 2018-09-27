@@ -24,8 +24,8 @@ import javax.persistence.Table;
  * @author vanbritt
  */
 @Entity
-@Table(name = "my_bundle")
-public class MyBundle implements Serializable {
+@Table(name = "my_webpack")
+public class MyWebpack implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -33,38 +33,21 @@ public class MyBundle implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "total_credit")
-    private Integer totalCredit;
-    @Column(name = "remaining_credit")
-    private Integer remainingCredit;
-     @Column(name = "use_credit")
-    private Integer useCredit;
     @Column(name = "status")
     private Boolean status;
-    @JoinColumn(name = "bundle", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Bundle bundle;
-    
     @JoinColumn(name = "student", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private AppUser student;
+    @JoinColumn(name = "webpack", referencedColumnName = "id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Webpack webpack;
 
-    public MyBundle() {
+    public MyWebpack() {
     }
 
-    public MyBundle(Integer id) {
+    public MyWebpack(Integer id) {
         this.id = id;
     }
-
-    public Integer getUseCredit() {
-        return useCredit;
-    }
-
-    public void setUseCredit(Integer useCredit) {
-        this.useCredit = useCredit;
-    }
-    
-    
 
     public Integer getId() {
         return id;
@@ -72,22 +55,6 @@ public class MyBundle implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getTotalCredit() {
-        return totalCredit;
-    }
-
-    public void setTotalCredit(Integer totalCredit) {
-        this.totalCredit = totalCredit;
-    }
-
-    public Integer getRemainingCredit() {
-        return remainingCredit;
-    }
-
-    public void setRemainingCredit(Integer remainingCredit) {
-        this.remainingCredit = remainingCredit;
     }
 
     public Boolean getStatus() {
@@ -98,20 +65,20 @@ public class MyBundle implements Serializable {
         this.status = status;
     }
 
-    public Bundle getBundle() {
-        return bundle;
-    }
-
-    public void setBundle(Bundle bundle) {
-        this.bundle = bundle;
-    }
-
     public AppUser getAppUser() {
         return student;
     }
 
     public void setAppUser(AppUser student) {
         this.student = student;
+    }
+
+    public Webpack getWebpack() {
+        return webpack;
+    }
+
+    public void setWebpack(Webpack webpack) {
+        this.webpack = webpack;
     }
 
     @Override
@@ -124,10 +91,10 @@ public class MyBundle implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof MyBundle)) {
+        if (!(object instanceof MyWebpack)) {
             return false;
         }
-        MyBundle other = (MyBundle) object;
+        MyWebpack other = (MyWebpack) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -136,7 +103,7 @@ public class MyBundle implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.test.entities.MyBundle[ id=" + id + " ]";
+        return "com.mycompany.test.entities.MyWebpack[ id=" + id + " ]";
     }
     
 }

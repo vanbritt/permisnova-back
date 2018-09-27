@@ -7,6 +7,7 @@ import org.permisnova.entities.AppUser;
 //import org.permisnova.entities.Task;
 import org.permisnova.sevice.AccountService;
 import org.permisnova.sevice.MailSenderService;
+import org.permisnova.sevice.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -31,6 +32,9 @@ public class JwtSpringSecApplication implements CommandLineRunner {
 
     @Autowired
     private AccountService accountService;
+    
+    @Autowired
+    private StorageService storageService;
 
     public static void main(String[] args) {
         SpringApplication.run(JwtSpringSecApplication.class, args);
@@ -60,6 +64,8 @@ public class JwtSpringSecApplication implements CommandLineRunner {
 
         accountService.addRoleToUser("admin@gmail.com", "ADMIN");
                 accountService.addRoleToUser("monitor@gmail.com", "MONITOR");
+                
+                storageService.init();
 
 //        accountService.addRoleToUser("admin", "USER");
 //        accountService.addRoleToUser("user", "USER");

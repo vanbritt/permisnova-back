@@ -5,7 +5,6 @@
  */
 package org.permisnova.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -15,8 +14,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
@@ -26,8 +25,8 @@ import javax.validation.constraints.Size;
  * @author vanbritt
  */
 @Entity
-@Table(name = "rendezvouslocation")
-public class Rendezvouslocation implements Serializable {
+@Table(name = "bank_account")
+public class BankAccount implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -36,20 +35,20 @@ public class Rendezvouslocation implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Size(max = 254)
-    @Column(name = "location")
-    private String location;
-    
-    @OneToMany(mappedBy = "location", fetch = FetchType.LAZY)
-    private List<Disponibility> disponibilityList;
-    
-    @JoinColumn(name = "monitor", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private AppUser monitor;
+    @Column(name = "rib")
+    private String rib;
+    @Size(max = 254)
+    @Column(name = "iban")
+    private String iban;
+    @OneToMany(mappedBy = "bankAccount", fetch = FetchType.LAZY)
+    private List<Bill> billList;
+    @OneToMany(mappedBy = "bankAccount", fetch = FetchType.LAZY)
+    private List<AppUser> monitorList;
 
-    public Rendezvouslocation() {
+    public BankAccount() {
     }
 
-    public Rendezvouslocation(Integer id) {
+    public BankAccount(Integer id) {
         this.id = id;
     }
 
@@ -61,32 +60,36 @@ public class Rendezvouslocation implements Serializable {
         this.id = id;
     }
 
-    public String getLocation() {
-        return location;
+    public String getRib() {
+        return rib;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
- 
-    
-//
-    public List<Disponibility> getDisponibilityList() {
-        return disponibilityList;
+    public void setRib(String rib) {
+        this.rib = rib;
     }
 
-    public void setDisponibilityList(List<Disponibility> disponibilityList) {
-        this.disponibilityList = disponibilityList;
+    public String getIban() {
+        return iban;
     }
- 
 
-    public AppUser getAppUser() {
-        return monitor;
+    public void setIban(String iban) {
+        this.iban = iban;
     }
-    
-@JsonIgnore
-    public void setAppUser(AppUser monitor) {
-        this.monitor = monitor;
+
+    public List<Bill> getBillList() {
+        return billList;
+    }
+
+    public void setBillList(List<Bill> billList) {
+        this.billList = billList;
+    }
+
+    public List<AppUser> getAppUserList() {
+        return monitorList;
+    }
+
+    public void setAppUserList(List<AppUser> monitorList) {
+        this.monitorList = monitorList;
     }
 
     @Override
@@ -99,10 +102,10 @@ public class Rendezvouslocation implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Rendezvouslocation)) {
+        if (!(object instanceof BankAccount)) {
             return false;
         }
-        Rendezvouslocation other = (Rendezvouslocation) object;
+        BankAccount other = (BankAccount) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -111,7 +114,7 @@ public class Rendezvouslocation implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.test.entities.Rendezvouslocation[ id=" + id + " ]";
+        return "com.mycompany.test.entities.BankAccount[ id=" + id + " ]";
     }
     
 }

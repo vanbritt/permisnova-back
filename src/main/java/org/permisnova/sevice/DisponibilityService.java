@@ -16,7 +16,7 @@ import org.permisnova.entities.Disponibility;
 public interface DisponibilityService {
 
     List<Disponibility> findAll();   
-    List<Disponibility> findByMonitor(AppUser monitor, boolean status);
+    List<Disponibility> findByAppUser(AppUser monitor, boolean status);
 
     
 

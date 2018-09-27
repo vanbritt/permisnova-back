@@ -46,7 +46,7 @@ public class LocationRestController {
         Authentication auth =  SecurityContextHolder.getContext().getAuthentication();
         
         AppUser appUser= accountService.findUserByEmailAndStatus(auth.getName(),true);
-        location.setMonitor(appUser);
+        location.setAppUser(appUser);
         
         return locationService.save(location);
     }
