@@ -5,6 +5,7 @@
  */
 package org.permisnova.seviceImpl;
 
+import java.util.List;
 import org.permisnova.dao.MyBundleRepository;
 import org.permisnova.entities.AppUser;
 import org.permisnova.entities.Bundle;
@@ -51,6 +52,12 @@ public class MyBundleServiceImpl implements MyBundleService {
 
         }
 
+    }
+
+    @Override
+    public List<MyBundle> userBundle(AppUser user) {
+        
+        return myBundleRepository.findMyBundleByStudent(user);
     }
 
 }

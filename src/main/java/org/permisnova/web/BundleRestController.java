@@ -8,6 +8,7 @@ package org.permisnova.web;
 import java.util.List;
 import org.permisnova.entities.AppUser;
 import org.permisnova.entities.Bundle;
+import org.permisnova.entities.MyBundle;
 import org.permisnova.sevice.AccountService;
 import org.permisnova.sevice.BundleService;
 import org.permisnova.sevice.MyBundleService;
@@ -25,44 +26,52 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author vanbritt
  */
-
 @RestController
 @RequestMapping("/bundle")
 public class BundleRestController {
-    
+
     @Autowired
     private BundleService bundleService;
-    
+
     @Autowired
     private MyBundleService myBundleService;
-    
+
     @Autowired
     private AccountService accountService;
-    
+
     @PostMapping
-    public Bundle save(@RequestBody Bundle bundle){
-        if(bundle!=null && bundle.getCode() != null){
-           return bundleService.save(bundle);
+    public Bundle save(@RequestBody Bundle bundle) {
+        if (bundle != null && bundle.getCode() != null) {
+            return bundleService.save(bundle);
         }
         return null;
     }
-    
-      @PostMapping("/buy")
-    public Bundle buy(@RequestParam("id") Integer id){
-       Bundle bundle = bundleService.finById(id);
-            Authentication auth =  SecurityContextHolder.getContext().getAuthentication();
-        
-        AppUser appUser= accountService.findUserByEmailAndStatus(auth.getName(),true);  
-        
-       myBundleService.addBundleToUser(bundle, appUser);
-       
+
+    @PostMapping("/buy")
+    public Bundle buy(@RequestParam("id") Integer id) {
+        Bundle bundle = bundleService.finById(id);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        AppUser appUser = accountService.findUserByEmailAndStatus(auth.getName(), true);
+
+        myBundleService.addBundleToUser(bundle, appUser);
+
         return null;
     }
-    
-    
+
     @GetMapping
-    public List<Bundle> findAll(){
+    public List<Bundle> findAll() {
         return bundleService.findAll();
     }
-    
+
+    @GetMapping("/mybundle")
+    public List<MyBundle> findMyBundle() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        AppUser appUser = accountService.findUserByEmailAndStatus(auth.getName(), true);
+
+        return myBundleService.userBundle(appUser);
+
+    }
+
 }

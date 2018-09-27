@@ -5,6 +5,7 @@
  */
 package org.permisnova.dao;
 
+import java.util.List;
 import org.permisnova.entities.AppUser;
 import org.permisnova.entities.Bundle;
 import org.permisnova.entities.MyBundle;
@@ -18,4 +19,5 @@ public interface MyBundleRepository extends JpaRepository<MyBundle, Integer> {
     
     MyBundle findMyBundleByBundleAndStudentAndStatus(Bundle bundle,AppUser user, Boolean Status);
     
+    List<MyBundle> findMyBundleByStudent(AppUser student);
 }

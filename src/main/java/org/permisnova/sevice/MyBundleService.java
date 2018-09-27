@@ -5,6 +5,7 @@
  */
 package org.permisnova.sevice;
 
+import java.util.List;
 import org.permisnova.entities.AppUser;
 import org.permisnova.entities.Bundle;
 import org.permisnova.entities.MyBundle;
@@ -18,5 +19,7 @@ public interface MyBundleService {
     void addBundleToUser(Bundle bundle, AppUser user);
     
     void removeCreditFromUserBundle(Bundle bundle, AppUser user, Integer credit);
+    
+    List<MyBundle> userBundle(AppUser user);
     
 }
