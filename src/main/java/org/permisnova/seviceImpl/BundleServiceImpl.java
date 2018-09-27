@@ -56,4 +56,10 @@ public class BundleServiceImpl  implements BundleService{
                 return bundle.get();
     }
 
+    @Override
+    public Bundle findByCode(String code) {
+
+        return bundleRepository.findBundleByCode(code);
+    }
+
 }

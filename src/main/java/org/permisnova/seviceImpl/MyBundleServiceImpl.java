@@ -27,7 +27,9 @@ public class MyBundleServiceImpl implements MyBundleService {
 
     @Override
     public void addBundleToUser(Bundle bundle, AppUser user) {
-        MyBundle myBundle = new MyBundle();
+        MyBundle myBundle= myBundleRepository.findMyBundleByBundle(bundle);
+        
+        if(myBundle== null){
 
         myBundle.setAppUser(user);
         myBundle.setBundle(bundle);
@@ -37,6 +39,12 @@ public class MyBundleServiceImpl implements MyBundleService {
         myBundle.setUseCredit(0);
 
         myBundleRepository.save(myBundle);
+        
+        }else{
+        
+                myBundle.setTotalCredit(myBundle.getTotalCredit()+bundle.getCredit());
+              myBundleRepository.save(myBundle);
+        }
 
     }
 
@@ -59,5 +67,20 @@ public class MyBundleServiceImpl implements MyBundleService {
         
         return myBundleRepository.findMyBundleByStudent(user);
     }
+
+    @Override
+    public boolean checkBundle(Bundle bundle, AppUser user) {
+        MyBundle myBundle= myBundleRepository.findMyBundleByBundle(bundle);
+        
+        if(myBundle==null){
+            return false;
+        }else if(myBundle.getRemainingCredit() < 0){
+            return false;
+        }else{
+            return true;
+        }
+
+        
+       }
 
 }

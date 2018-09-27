@@ -22,4 +22,6 @@ public interface MyBundleService {
     
     List<MyBundle> userBundle(AppUser user);
     
+    boolean checkBundle(Bundle bundle, AppUser user);
+    
 }

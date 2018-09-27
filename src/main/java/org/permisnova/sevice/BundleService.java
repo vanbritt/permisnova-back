@@ -17,7 +17,7 @@ import org.permisnova.entities.MyBundle;
 public interface BundleService {
 
     List<Bundle> findAll();
-
+    Bundle findByCode(String code);
     void delete(Integer id);
 
     Bundle save(Bundle location);

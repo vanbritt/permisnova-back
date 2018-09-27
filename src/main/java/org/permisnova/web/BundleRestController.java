@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -72,5 +73,18 @@ public class BundleRestController {
         return myBundleService.userBundle(appUser);
 
     }
+    
+   @GetMapping("/check/{code}")
+   public boolean checkBundle(@PathVariable("code") String code){
+        
+            Bundle bundle = bundleService.findByCode(code);
+            if(bundle  != null){
+                     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+                    AppUser appUser = accountService.findUserByEmailAndStatus(auth.getName(), true);
+                    return myBundleService.checkBundle(bundle, appUser);
+                }
+            return false;
+   }
 
 }

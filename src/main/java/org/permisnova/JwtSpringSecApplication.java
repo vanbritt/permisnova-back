@@ -60,6 +60,7 @@ public class JwtSpringSecApplication implements CommandLineRunner {
         accountService.saveUser(new AppUser("admin@gmail.com", "admin"));
                 accountService.saveUser(new AppUser("monitor@gmail.com", "monitor"));
 
+                  accountService.saveUser(new AppUser("student@gmail.com", "student"));
 //        accountService.saveUser(new AppUser("user", "1234"));
         accountService.saveRole(new AppRole("ADMIN"));
         accountService.saveRole(new AppRole("STUDENT"));
@@ -67,6 +68,9 @@ public class JwtSpringSecApplication implements CommandLineRunner {
 
         accountService.addRoleToUser("admin@gmail.com", "ADMIN");
                 accountService.addRoleToUser("monitor@gmail.com", "MONITOR");
+                
+                 accountService.addRoleToUser("student@gmail.com", "STUDENT");
+                
                 
                 
                 storageService.init();
