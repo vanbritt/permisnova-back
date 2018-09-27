@@ -79,10 +79,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         //permet de specifier que rien que les admin on access pour ajouter une tache a /tasks
 //        http.authorizeRequests().antMatchers(HttpMethod.POST, "/user/**").hasAuthority("ADMIN");
-                http.authorizeRequests().antMatchers(HttpMethod.POST, "/bundle/**").hasAuthority("ADMIN");
+//                http.authorizeRequests().antMatchers(HttpMethod.POST, "/bundle/**").hasAuthority("ADMIN");
 
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/register/student/**").permitAll();
-                http.authorizeRequests().antMatchers(HttpMethod.GET, "/bundle/**").permitAll();
+                http.authorizeRequests().antMatchers("/bundle/**").permitAll();
 
                 http.authorizeRequests().antMatchers(HttpMethod.POST, "/register/monitor/**").permitAll();
 

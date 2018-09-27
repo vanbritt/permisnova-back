@@ -48,15 +48,14 @@ public class BundleRestController {
     }
 
     @PostMapping("/buy")
-    public Bundle buy(@RequestParam("id") Integer id) {
-        Bundle bundle = bundleService.finById(id);
+    public Bundle buy(@RequestBody Bundle bundle) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         AppUser appUser = accountService.findUserByEmailAndStatus(auth.getName(), true);
 
         myBundleService.addBundleToUser(bundle, appUser);
-
         return null;
+        
     }
 
     @GetMapping

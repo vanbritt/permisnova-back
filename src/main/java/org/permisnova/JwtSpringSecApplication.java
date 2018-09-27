@@ -2,6 +2,7 @@ package org.permisnova;
 
 import java.util.TimeZone;
 import javax.annotation.PostConstruct;
+import javax.servlet.ServletContext;
 import org.permisnova.entities.AppRole;
 import org.permisnova.entities.AppUser;
 //import org.permisnova.entities.Task;
@@ -35,6 +36,8 @@ public class JwtSpringSecApplication implements CommandLineRunner {
     
     @Autowired
     private StorageService storageService;
+    
+    @Autowired ServletContext  servletContext;
 
     public static void main(String[] args) {
         SpringApplication.run(JwtSpringSecApplication.class, args);
@@ -64,6 +67,7 @@ public class JwtSpringSecApplication implements CommandLineRunner {
 
         accountService.addRoleToUser("admin@gmail.com", "ADMIN");
                 accountService.addRoleToUser("monitor@gmail.com", "MONITOR");
+                
                 
                 storageService.init();
 
