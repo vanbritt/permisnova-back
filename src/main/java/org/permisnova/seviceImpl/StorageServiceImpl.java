@@ -59,7 +59,11 @@ public class StorageServiceImpl implements StorageService {
  
 	public void init() {
 		try {
+                    if(!Files.exists(rootLocation)){
+                        
 			Files.createDirectory(rootLocation);
+               
+                    }
 		} catch (IOException e) {
 			throw new RuntimeException("Could not initialize storage!");
 		}
