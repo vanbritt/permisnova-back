@@ -155,7 +155,7 @@ public class AccountRestController {
       @GetMapping("/user/{id}")
     public AppUser updateProfile(@PathVariable Long id) {
         
-        AppUser appUser= accountService.findUserById(id,true);  
+        AppUser appUser= accountService.findByIdAndStatus(id,true);  
         
         return appUser;
     }

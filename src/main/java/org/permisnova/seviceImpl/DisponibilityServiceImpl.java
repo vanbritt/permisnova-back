@@ -6,9 +6,12 @@
 package org.permisnova.seviceImpl;
 
 import java.util.List;
+import java.util.Optional;
 import org.permisnova.dao.DisponibilityRepository;
+import org.permisnova.dao.ReservationRepository;
 import org.permisnova.entities.AppUser;
 import org.permisnova.entities.Disponibility;
+import org.permisnova.entities.Reservation;
 import org.permisnova.sevice.DisponibilityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +25,8 @@ import org.springframework.stereotype.Service;
 public class DisponibilityServiceImpl  implements DisponibilityService{
     @Autowired
      private DisponibilityRepository disponibilityRepository;
-    
+        @Autowired
+     private ReservationRepository reservationRepository;
     
     @Override
     public List<Disponibility> findAll() {
@@ -47,6 +51,25 @@ public class DisponibilityServiceImpl  implements DisponibilityService{
     @Override
     public List<Disponibility> findByAppUser(AppUser monitor, boolean status) {
                             return disponibilityRepository.findByMonitorAndStatus(monitor, status);
+    }
+
+    @Override
+    public Disponibility findById(Integer id) {
+
+            Optional<Disponibility> disponibility= disponibilityRepository.findById(id);
+            
+            return disponibility.get();
+    }
+
+    @Override
+    public Reservation reserve(Reservation reservation) {
+            
+            return reservationRepository.save(reservation);
+    }
+
+    @Override
+    public boolean cancel(Long id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

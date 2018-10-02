@@ -72,9 +72,21 @@ public class MyBundleServiceImpl implements MyBundleService {
     }
 
     @Override
+    public MyBundle userBundle(AppUser user, String code) {
+        
+                Bundle bundle= BundleRepository.findBundleByCode(code);
+                
+        
+      return myBundleRepository.findMyBundleByBundleAndStudent(bundle,user);
+    }
+    
+    
+     @Override
     public List<MyBundle> userBundle(AppUser user) {
         
-        return myBundleRepository.findMyBundleByStudent(user);
+                
+        
+      return myBundleRepository.findMyBundleByStudent(user);
     }
 
     @Override

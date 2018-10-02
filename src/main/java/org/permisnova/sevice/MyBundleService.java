@@ -20,7 +20,12 @@ public interface MyBundleService {
     
     void removeCreditFromUserBundle(Bundle bundle, AppUser user, Integer credit);
     
-    MyBundle userBundle(AppUser user);
+    MyBundle userBundle(AppUser user, String code);
+    
+     List <MyBundle> userBundle(AppUser user);
+
+   
+
     
     boolean checkBundle(Bundle bundle, AppUser user);
     
