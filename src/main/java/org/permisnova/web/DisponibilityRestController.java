@@ -14,10 +14,10 @@ import org.permisnova.entities.Rendezvouslocation;
 import org.permisnova.sevice.AccountService;
 import org.permisnova.sevice.DisponibilityService;
 import org.permisnova.sevice.LocationService;
+import org.permisnova.sevice.MyBundleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,6 +41,9 @@ public class DisponibilityRestController {
     
     @Autowired
     private LocationService locationService;
+      @Autowired
+    private MyBundleService myBundleService;
+    
     
     @GetMapping
     public List<Disponibility> findAll() {
@@ -73,6 +76,19 @@ public class DisponibilityRestController {
      @GetMapping("/delete/{id}")
     public  boolean delete(@PathVariable int id ){
          System.out.println("good");
+        disponibilityService.delete(id);
+        return true;
+    }
+    
+     @GetMapping("/reserve/{id}")
+    public  boolean reserve(@PathVariable int id ){
+        
+         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+         AppUser appUser = accountService.findUserByEmailAndStatus(auth.getName(), true);
+         
+         boolean check= myBundleService.
+       
         disponibilityService.delete(id);
         return true;
     }
