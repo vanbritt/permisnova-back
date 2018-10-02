@@ -23,6 +23,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -149,6 +150,13 @@ public class AccountRestController {
         AppUser appUser= accountService.findUserByEmailAndStatus(auth.getName(),true);  
         
           System.out.println(appUser);
+        return appUser;
+    }
+      @GetMapping("/user/{id}")
+    public AppUser updateProfile(@PathVariable Long id) {
+        
+        AppUser appUser= accountService.findUserById(id,true);  
+        
         return appUser;
     }
     

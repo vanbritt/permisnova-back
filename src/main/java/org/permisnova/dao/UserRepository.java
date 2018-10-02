@@ -15,6 +15,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface UserRepository extends JpaRepository<AppUser, Long> {
     
     AppUser findByEmailAndStatus(String email, boolean status);
+        AppUser findByIdAndStatus(Long id, boolean status);
     AppUser findByEmail(String email);
     
 }

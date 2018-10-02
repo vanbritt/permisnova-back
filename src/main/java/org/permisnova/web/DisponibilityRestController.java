@@ -47,6 +47,14 @@ public class DisponibilityRestController {
         return disponibilityService.findAll();
     }
     
+    @GetMapping("/monitor/{id}")
+    public  List<Disponibility> findByMonitor(@PathVariable Long id){
+            
+            AppUser monitor= accountService.findByIdAndStatus(id, true);
+            
+            return disponibilityService.findByAppUser(monitor, true);
+    } 
+    
     @PostMapping
     public Disponibility save(@RequestParam("disponibility") String disponibility, @RequestParam("location") String location) throws IOException {
         

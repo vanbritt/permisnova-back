@@ -22,6 +22,9 @@ public interface AccountService {
     void addRoleToUser(String username, String role);
 
     AppUser findUserByEmail(String email);
+    
+        AppUser findByIdAndStatus(Long id, boolean status );
+
 
     AppUser findUserByEmailAndStatus(String email, boolean status);
      

@@ -7,6 +7,7 @@ package org.permisnova.seviceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.permisnova.dao.RoleRepository;
 import org.permisnova.dao.UserRepository;
 import org.permisnova.entities.AppRole;
@@ -79,6 +80,19 @@ public class AccountServiceImpl implements AccountService {
         
          return users;
         }
+
+    public AppUser findUserById(Long id) {
+        
+       Optional <AppUser> user = userRepository.findById(id);
+       return user.get();
+    }
+
+    @Override
+    public AppUser findByIdAndStatus(Long id, boolean status) {
+       
+               AppUser user = userRepository.findByIdAndStatus(id, true);
+       return user;
+    }
         
 
 }

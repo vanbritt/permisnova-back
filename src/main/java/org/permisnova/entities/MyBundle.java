@@ -5,6 +5,7 @@
  */
 package org.permisnova.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -43,7 +44,7 @@ public class MyBundle implements Serializable {
     private Boolean status;
     @JoinColumn(name = "bundle", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Bundle bundle;
+     private Bundle bundle;
     
     @JoinColumn(name = "student", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -97,15 +98,16 @@ public class MyBundle implements Serializable {
     public void setStatus(Boolean status) {
         this.status = status;
     }
-
+@JsonIgnore
     public Bundle getBundle() {
         return bundle;
     }
 
+    
     public void setBundle(Bundle bundle) {
         this.bundle = bundle;
     }
-
+@JsonIgnore
     public AppUser getAppUser() {
         return student;
     }
