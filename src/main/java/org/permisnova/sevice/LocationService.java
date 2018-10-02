@@ -21,5 +21,5 @@ public interface LocationService {
     Rendezvouslocation save(Rendezvouslocation location);
 
     Rendezvouslocation update(Rendezvouslocation location);
-
+    Rendezvouslocation findByLocation(String location);
 }

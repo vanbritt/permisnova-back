@@ -43,5 +43,11 @@ public class LocationServiceImpl implements LocationService{
     public Rendezvouslocation update(Rendezvouslocation location) {
             return locationRepository.save(location);
     }
+
+    @Override
+    public Rendezvouslocation findByLocation(String location) {
+
+            return locationRepository.findByLocation(location);
+    }
     
 }

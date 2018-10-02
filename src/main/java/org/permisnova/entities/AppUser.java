@@ -86,8 +86,10 @@ public class AppUser {
     @JoinColumn(name = "vehicle_document", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private VehicleDocument vehicleDocument;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "monitor", fetch = FetchType.LAZY)
     private List<Disponibility> disponibilityList;
+   
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "monitor", fetch = FetchType.LAZY)
     private List<CourseMaterial> courseMaterialList;
     

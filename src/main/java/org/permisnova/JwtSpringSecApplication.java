@@ -130,7 +130,7 @@ public class JwtSpringSecApplication implements CommandLineRunner {
         Rendezvouslocation location1 = new Rendezvouslocation();
 
         location1.setAppUser(monitor);
-        location1.setLocation("Yaounde");
+        location1.setLocation("Douala");
 
         locationService.save(location);
         locationService.save(location1);

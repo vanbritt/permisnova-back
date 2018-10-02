@@ -5,18 +5,24 @@
  */
 package org.permisnova.web;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
 import java.util.List;
 import org.permisnova.entities.AppUser;
 import org.permisnova.entities.Disponibility;
+import org.permisnova.entities.Rendezvouslocation;
 import org.permisnova.sevice.AccountService;
 import org.permisnova.sevice.DisponibilityService;
+import org.permisnova.sevice.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -33,27 +39,40 @@ public class DisponibilityRestController {
     @Autowired
     private AccountService accountService;
     
+    @Autowired
+    private LocationService locationService;
+    
     @GetMapping
-    public List<Disponibility> findAll(){
+    public List<Disponibility> findAll() {
         return disponibilityService.findAll();
     }
     
     @PostMapping
-    public Disponibility save(@RequestBody Disponibility disponibility){
+    public Disponibility save(@RequestParam("disponibility") String disponibility, @RequestParam("location") String location) throws IOException {
         
-            Authentication auth =  SecurityContextHolder.getContext().getAuthentication();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println(location + " " + disponibility);
         
-        AppUser appUser= accountService.findUserByEmailAndStatus(auth.getName(),true);
-        disponibility.setAppUser(appUser);
-        disponibility.setStatus(true);
-        return disponibilityService.save(disponibility);
+        Disponibility dispo = new ObjectMapper().readValue(disponibility, Disponibility.class);
+        Rendezvouslocation loc = locationService.findByLocation(location);
+        dispo.setLocation(loc);
+        AppUser appUser = accountService.findUserByEmailAndStatus(auth.getName(), true);
+        dispo.setAppUser(appUser);
+        dispo.setStatus(true);
+        return disponibilityService.save(dispo);
     }
     
-     @GetMapping("/monitor")
-    public List<Disponibility> findByAppUser(){
+     @GetMapping("/delete/{id}")
+    public  boolean delete(@PathVariable int id ){
+         System.out.println("good");
+        disponibilityService.delete(id);
+        return true;
+    }
+    
+    @GetMapping("/monitor")
+    public List<Disponibility> findByAppUser() {
 //        return disponibilityService.findByAppUser(monitor, true);
-return disponibilityService.findAll();
+        return disponibilityService.findAll();
     }
-    
     
 }

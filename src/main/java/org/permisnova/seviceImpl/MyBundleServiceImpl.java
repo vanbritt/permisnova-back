@@ -6,6 +6,8 @@
 package org.permisnova.seviceImpl;
 
 import java.util.List;
+import java.util.Optional;
+import org.permisnova.dao.BundleRepository;
 import org.permisnova.dao.MyBundleRepository;
 import org.permisnova.entities.AppUser;
 import org.permisnova.entities.Bundle;
@@ -25,12 +27,19 @@ public class MyBundleServiceImpl implements MyBundleService {
     @Autowired
     private MyBundleRepository myBundleRepository;
 
+      @Autowired
+    private BundleRepository BundleRepository;
+      
     @Override
-    public void addBundleToUser(Bundle bundle, AppUser user) {
+    public void addBundleToUser(Integer id, AppUser user) {
+       Optional <Bundle>bundle1= BundleRepository.findById(id);
+        
+        Bundle bundle= bundle1.get();
         MyBundle myBundle= myBundleRepository.findMyBundleByBundle(bundle);
         
         if(myBundle== null){
-
+            myBundle= new MyBundle();
+            
         myBundle.setAppUser(user);
         myBundle.setBundle(bundle);
         myBundle.setStatus(Boolean.TRUE);

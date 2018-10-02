@@ -142,6 +142,16 @@ public class AccountRestController {
         return appUser;
     }
     
+      @GetMapping("/user/connected")
+    public AppUser updateProfile() {
+           Authentication auth =  SecurityContextHolder.getContext().getAuthentication();
+        
+        AppUser appUser= accountService.findUserByEmailAndStatus(auth.getName(),true);  
+        
+          System.out.println(appUser);
+        return appUser;
+    }
+    
     @PostMapping("/user/reset")
     public AppUser resetPassword(@RequestBody ResetPassword resetPassword){
         

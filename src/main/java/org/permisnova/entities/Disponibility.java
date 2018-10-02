@@ -50,9 +50,11 @@ public class Disponibility implements Serializable {
     private Integer numberHours;
     @Column(name = "status")
     private Boolean status;
+
     @JoinColumn(name = "monitor", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private AppUser monitor;
+    
     @JoinColumn(name = "location", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.EAGER)
     private Rendezvouslocation location;
@@ -68,6 +70,22 @@ public class Disponibility implements Serializable {
 
     public Integer getId() {
         return id;
+    }
+
+    public AppUser getMonitor() {
+        return monitor;
+    }
+
+    public void setMonitor(AppUser monitor) {
+        this.monitor = monitor;
+    }
+
+    public Rendezvouslocation getLocation() {
+        return location;
+    }
+
+    public void setLocation(Rendezvouslocation location) {
+        this.location = location;
     }
 
     public void setId(Integer id) {
@@ -134,6 +152,7 @@ public class Disponibility implements Serializable {
         return location;
     }
 
+    @JsonIgnore
     public void setRendezvousLocation(Rendezvouslocation rendezvousLocation) {
         this.location = rendezvousLocation;
     }

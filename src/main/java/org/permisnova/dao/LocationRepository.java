@@ -13,5 +13,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author vanbritt
  */
 public interface LocationRepository extends JpaRepository<Rendezvouslocation, Integer> {
-     
+     Rendezvouslocation findByLocation(String location);
 }

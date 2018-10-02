@@ -16,7 +16,7 @@ import org.permisnova.entities.MyBundle;
  */
 public interface MyBundleService {
     
-    void addBundleToUser(Bundle bundle, AppUser user);
+    void addBundleToUser(Integer id, AppUser user);
     
     void removeCreditFromUserBundle(Bundle bundle, AppUser user, Integer credit);
     
