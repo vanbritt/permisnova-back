@@ -15,18 +15,19 @@ import org.permisnova.entities.MyBundle;
  * @author vanbritt
  */
 public interface MyBundleService {
-    
+
     void addBundleToUser(Integer id, AppUser user);
-    
+
+    MyBundle save(MyBundle myBundle);
+
+    void dlete(int delete);
+
     void removeCreditFromUserBundle(Bundle bundle, AppUser user, Integer credit);
-    
+
     MyBundle userBundle(AppUser user, String code);
-    
-     List <MyBundle> userBundle(AppUser user);
 
-   
+    MyBundle userBundle(AppUser user);
 
-    
     boolean checkBundle(Bundle bundle, AppUser user);
-    
+
 }

@@ -6,7 +6,9 @@
 package org.permisnova.sevice;
 
 import javax.mail.MessagingException;
+import org.permisnova.entities.AppUser;
 import org.permisnova.entities.HTMLMail;
+import org.permisnova.entities.Reservation;
 import org.permisnova.entities.SimpleMail;
 
 /**
@@ -19,5 +21,6 @@ public interface MailSenderService {
 
     void sendHTMLMail(HTMLMail mail);
     void sendHTMLMailAttachment(HTMLMail mail,String firstname, String lastname, String password) throws MessagingException;
+    void sendHTMLMailAttachmentReservation(HTMLMail mail,AppUser user, Reservation reservation) throws MessagingException;
 
 }

@@ -9,8 +9,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.mail.MessagingException;
 import org.permisnova.entities.AppUser;
+import org.permisnova.entities.Bundle;
 import org.permisnova.entities.Disponibility;
+import org.permisnova.entities.HTMLMail;
 import org.permisnova.entities.MyBundle;
 import org.permisnova.entities.Rendezvouslocation;
 import org.permisnova.entities.Reservation;
@@ -18,6 +23,7 @@ import org.permisnova.sevice.AccountService;
 import org.permisnova.sevice.BundleService;
 import org.permisnova.sevice.DisponibilityService;
 import org.permisnova.sevice.LocationService;
+import org.permisnova.sevice.MailSenderService;
 import org.permisnova.sevice.MyBundleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -50,6 +56,9 @@ public class DisponibilityRestController {
 
     @Autowired
     private BundleService bundleService;
+    
+        @Autowired
+    private MailSenderService mailService;
 
     @GetMapping
     public List<Disponibility> findAll() {
@@ -61,7 +70,7 @@ public class DisponibilityRestController {
 
         AppUser monitor = accountService.findByIdAndStatus(id, true);
 
-        return disponibilityService.findByAppUser(monitor, true);
+        return disponibilityService.findDisponibilityByUser(monitor, true);
     }
 
     @PostMapping
@@ -85,6 +94,42 @@ public class DisponibilityRestController {
         disponibilityService.delete(id);
         return true;
     }
+    
+    
+    @GetMapping("/cancel/{id}")
+    public  Reservation cancelReservation(@PathVariable int id) {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        AppUser appUser = accountService.findUserByEmailAndStatus(auth.getName(), true);
+                MyBundle myBundle = myBundleService.userBundle(appUser, "driving");
+        Date today= new Date();
+        
+        
+        Reservation reservation= disponibilityService.findReservationById(id);
+        
+        System.out.println(reservation);
+        
+        System.out.println(reservation.getDate());
+        
+        
+        int diff= today.getHours()- reservation.getTime().getHours();
+
+        int timediff= reservation.getDisponibility().getEndTime().getHours() - reservation.getDisponibility().getStartTime().getHours();
+           
+
+
+        if (diff < 48) {
+            reservation.setState("cancel");
+            myBundle.setRemainingCredit(myBundle.getRemainingCredit()+timediff);
+            myBundle.setUseCredit(myBundle.getUseCredit()-timediff);
+            reservation.getDisponibility().setStatus(Boolean.TRUE);
+            disponibilityService.saveReservation(reservation);
+            myBundleService.save(myBundle);
+
+        }
+        return reservation;
+    }
 
     @GetMapping("/reserve/{id}")
     public MyBundle reserve(@PathVariable int id) {
@@ -92,31 +137,54 @@ public class DisponibilityRestController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         AppUser appUser = accountService.findUserByEmailAndStatus(auth.getName(), true);
-
+        Bundle bundle = bundleService.findByCode("driving");
         MyBundle myBundle = myBundleService.userBundle(appUser, "driving");
 
-        boolean check = myBundleService.checkBundle(myBundle.getBundle(), appUser);
+        boolean check = myBundleService.checkBundle(bundle, appUser);
 
         if (check) {
-            Disponibility dispo = disponibilityService.findById( id);
+            Disponibility dispo = disponibilityService.findById(id);
             int difference = dispo.getEndTime().getHours() - dispo.getStartTime().getHours();
-            
+
             myBundleService.removeCreditFromUserBundle(myBundle.getBundle(), appUser, difference);
             Reservation reservation = new Reservation();
 
             reservation.setAppUser(appUser);
             reservation.setDisponibility(dispo);
-            reservation.setState("true");
+            reservation.setState("confirm");
+            reservation.setDate(new Date());
             reservation.setTime(new Date());
-
+            dispo.setStatus(false);
+            HTMLMail  mail= new HTMLMail(dispo.getMonitor().getEmail());
+            
+            try {
+                mailService.sendHTMLMailAttachmentReservation(mail, appUser, reservation);
+            } catch (MessagingException ex) {
+                    throw  new RuntimeException("error sending mail");
+                    
+            }
             disponibilityService.reserve(reservation);
+            disponibilityService.save(dispo);
 
         }
 
-        disponibilityService.delete(id);
         return myBundle;
     }
+    
+    //returns all the reservations belonging to a student
+     @GetMapping("/reserve")
+    public  List<Reservation>  reserve() {
 
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        AppUser appUser = accountService.findUserByEmailAndStatus(auth.getName(), true);
+          
+        return   disponibilityService.findByUser(appUser, "confirm");
+        }
+    
+    
+
+    //display all the monitors availability
     @GetMapping("/monitor")
     public List<Disponibility> findByAppUser() {
 //        return disponibilityService.findByAppUser(monitor, true);

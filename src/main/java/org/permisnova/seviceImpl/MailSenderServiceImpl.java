@@ -11,7 +11,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import org.permisnova.entities.AppUser;
 import org.permisnova.entities.HTMLMail;
+import org.permisnova.entities.Reservation;
 import org.permisnova.entities.SimpleMail;
 import org.permisnova.sevice.MailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,6 +95,42 @@ public class MailSenderServiceImpl implements MailSenderService{
             Logger.getLogger(MailSenderServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
             
+    }
+
+    @Override
+    public void sendHTMLMailAttachmentReservation(HTMLMail mail, AppUser user, Reservation reservation) throws MessagingException {
+                      MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message,
+                MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+                StandardCharsets.UTF_8.name());
+        
+            
+            
+        try {
+          
+        String inlineImage = "<img align='center' src='cid:picture'><br/>";
+        
+        mail.setContent("<h2><strong>Nova Victoria</strong> </h2>"
+                + "<h3> Your Online Driving PlatForm</h3><br/>"
+                 + "Mr/Mrs. "+ user.getLastname() +" "+user.getFirstname()+ " <br/>"
+                + "<p>Has reserve an availbality For the : <strong>" +reservation.getDisponibility().getDate() +"</strong> at "+ reservation.getDisponibility().getStartTime()+"</p><br/>"
+                        + "<p> Reservation date: "+ reservation.getDate() +"  Location: </p>"+ reservation.getDisponibility().getLocation().getLocation()
+                                + "<h5> NB: please confirm the student on the platform</h5>");
+
+
+        helper.setText(mail.getHeader()+ inlineImage + mail.getContent() + mail.getFooter(), true);
+        helper.setSubject(mail.getSubject());
+        helper.setTo(mail.getTo());
+        helper.addInline( "picture",  new FileSystemResource(new File("src/main/resources/logo2.png")));
+
+            
+            mailSender.send(message);
+            
+        } catch (MessagingException ex) {
+            Logger.getLogger(MailSenderServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    
     }
     
 }

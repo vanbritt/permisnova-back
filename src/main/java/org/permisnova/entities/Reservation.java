@@ -5,6 +5,7 @@
  */
 package org.permisnova.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -41,9 +42,9 @@ public class Reservation implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date date;
     @Column(name = "time")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIME)
     private Date time;
-    @Size(max = 254)
+    @Size(max=254)
     @Column(name = "state")
     private String state;
     @JoinColumn(name = "bill", referencedColumnName = "id")
@@ -122,6 +123,7 @@ public class Reservation implements Serializable {
         this.learningBooklet = learningBooklet;
     }
 
+    @JsonIgnore
     public AppUser getAppUser() {
         return student;
     }

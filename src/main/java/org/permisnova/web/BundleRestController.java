@@ -65,7 +65,7 @@ public class BundleRestController {
     }
 
     @GetMapping("/mybundle")
-    public List<MyBundle> findMyBundle() {
+    public MyBundle findMyBundle() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         AppUser appUser = accountService.findUserByEmailAndStatus(auth.getName(), true);
@@ -73,6 +73,7 @@ public class BundleRestController {
         return myBundleService.userBundle(appUser);
 
     }
+    
     
    @GetMapping("/check/{code}")
    public boolean checkBundle(@PathVariable("code") String code){

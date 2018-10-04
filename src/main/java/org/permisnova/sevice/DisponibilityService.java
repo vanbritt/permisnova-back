@@ -18,7 +18,13 @@ public interface DisponibilityService {
 
     List<Disponibility> findAll();
 
-    List<Disponibility> findByAppUser(AppUser monitor, boolean status);
+    List<Disponibility> findDisponibilityByUser(AppUser monitor, Boolean status);
+
+    List<Reservation> findByUser(AppUser student, String state);
+
+    Reservation findReservationById(Integer id);
+
+    Reservation saveReservation(Reservation reservation);
 
     Disponibility save(Disponibility disponibility);
 
@@ -27,9 +33,9 @@ public interface DisponibilityService {
     void delete(Integer id);
 
     Disponibility update(Disponibility disponibility);
-    
+
     Reservation reserve(Reservation reservation);
-    
+
     boolean cancel(Long id);
 
 }

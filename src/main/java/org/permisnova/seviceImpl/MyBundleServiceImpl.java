@@ -82,7 +82,7 @@ public class MyBundleServiceImpl implements MyBundleService {
     
     
      @Override
-    public List<MyBundle> userBundle(AppUser user) {
+    public MyBundle userBundle(AppUser user) {
         
                 
         
@@ -92,6 +92,8 @@ public class MyBundleServiceImpl implements MyBundleService {
     @Override
     public boolean checkBundle(Bundle bundle, AppUser user) {
         MyBundle myBundle= myBundleRepository.findMyBundleByBundle(bundle);
+        
+        System.out.println(myBundle);
         
         if(myBundle==null){
             return false;
@@ -103,5 +105,17 @@ public class MyBundleServiceImpl implements MyBundleService {
 
         
        }
+
+    @Override
+    public MyBundle save(MyBundle myBundle) {
+
+        return myBundleRepository.save(myBundle);
+
+    }
+
+    @Override
+    public void dlete(int delete) {
+        myBundleRepository.deleteById(delete);
+    }
 
 }

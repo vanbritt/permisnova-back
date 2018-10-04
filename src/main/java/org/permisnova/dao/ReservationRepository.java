@@ -5,6 +5,8 @@
  */
 package org.permisnova.dao;
 
+import java.util.List;
+import org.permisnova.entities.AppUser;
 import org.permisnova.entities.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -12,6 +14,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author vanbritt
  */
-public interface ReservationRepository extends JpaRepository<Reservation, Long>{
+public interface ReservationRepository extends JpaRepository<Reservation, Integer>{
+   
+    List<Reservation> findByStudentAndState(AppUser student,String state);    
+
+    
+    
     
 }

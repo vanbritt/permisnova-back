@@ -20,14 +20,14 @@ import org.springframework.stereotype.Service;
  *
  * @author vanbritt
  */
-
 @Service
-public class DisponibilityServiceImpl  implements DisponibilityService{
+public class DisponibilityServiceImpl implements DisponibilityService {
+
     @Autowired
-     private DisponibilityRepository disponibilityRepository;
-        @Autowired
-     private ReservationRepository reservationRepository;
-    
+    private DisponibilityRepository disponibilityRepository;
+    @Autowired
+    private ReservationRepository reservationRepository;
+
     @Override
     public List<Disponibility> findAll() {
         return disponibilityRepository.findAll();
@@ -35,41 +35,59 @@ public class DisponibilityServiceImpl  implements DisponibilityService{
 
     @Override
     public Disponibility save(Disponibility disponibility) {
-          return disponibilityRepository.save(disponibility);
+        return disponibilityRepository.save(disponibility);
     }
 
     @Override
     public void delete(Integer id) {
-           disponibilityRepository.deleteById(id);
+        disponibilityRepository.deleteById(id);
     }
 
     @Override
     public Disponibility update(Disponibility disponibility) {
-          return  disponibilityRepository.save(disponibility);
+        return disponibilityRepository.save(disponibility);
     }
 
     @Override
-    public List<Disponibility> findByAppUser(AppUser monitor, boolean status) {
-                            return disponibilityRepository.findByMonitorAndStatus(monitor, status);
+    public List<Reservation> findByUser(AppUser student, String status) {
+        return reservationRepository.findByStudentAndState(student, status);
     }
 
     @Override
     public Disponibility findById(Integer id) {
 
-            Optional<Disponibility> disponibility= disponibilityRepository.findById(id);
-            
-            return disponibility.get();
+        Optional<Disponibility> disponibility = disponibilityRepository.findById(id);
+
+        return disponibility.get();
     }
 
     @Override
     public Reservation reserve(Reservation reservation) {
-            
-            return reservationRepository.save(reservation);
+
+        return reservationRepository.save(reservation);
     }
 
     @Override
     public boolean cancel(Long id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
+    @Override
+    public Reservation findReservationById(Integer id) {
+        Optional<Reservation> reservation = reservationRepository.findById(id);
+        return reservation.get();
+    }
+
+    @Override
+    public Reservation saveReservation(Reservation reservation) {
+        return reservationRepository.save(reservation);
+    }
+
+    @Override
+    public List<Disponibility> findDisponibilityByUser(AppUser monitor, Boolean status) {
+
+        return disponibilityRepository.findByMonitorAndStatus(monitor, status);
+
+    }
+
 }

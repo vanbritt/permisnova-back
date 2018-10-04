@@ -19,7 +19,7 @@ public interface MyBundleRepository extends JpaRepository<MyBundle, Integer> {
     
     MyBundle findMyBundleByBundleAndStudentAndStatus(Bundle bundle,AppUser user, Boolean Status);
     
-    List<MyBundle> findMyBundleByStudent(AppUser student);
+    MyBundle findMyBundleByStudent(AppUser student);
     
     MyBundle findMyBundleByBundle(Bundle bundle);
     MyBundle findMyBundleByBundleAndStudent(Bundle bundle, AppUser student);

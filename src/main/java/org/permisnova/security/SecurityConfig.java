@@ -86,6 +86,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
                 http.authorizeRequests().antMatchers(HttpMethod.POST, "/register/monitor/**").permitAll();
+                http.authorizeRequests().antMatchers(HttpMethod.POST, "/coursematerial/monitor/**").permitAll();
 
 
         http.authorizeRequests().anyRequest().authenticated();//donne l'access a toute les resources pour les utilisateur authentifier

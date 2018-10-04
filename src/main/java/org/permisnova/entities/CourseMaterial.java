@@ -5,6 +5,8 @@
  */
 package org.permisnova.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -40,17 +42,26 @@ public class CourseMaterial implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+
     @Size(max = 254)
     @Column(name = "label")
     private String label;
-    @Column(name = "files")
-    private Short files;
+    
+     @Size(max = 254)
+    @Column(name = "category")
+    private String category;
+
+    @Size(max = 254)
+    @Column(name = "filename")
+    private String fileName;
+
     @Column(name = "upload_date")
     @Temporal(TemporalType.DATE)
     private Date uploadDate;
+
     @Column(name = "description")
-    @Temporal(TemporalType.DATE)
-    private Date description;
+    private String description;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseMaterial", fetch = FetchType.LAZY)
     private List<MyCourseMaterial> myCourseMaterialList;
     @JoinColumn(name = "monitor", referencedColumnName = "id")
@@ -72,6 +83,40 @@ public class CourseMaterial implements Serializable {
         this.id = id;
     }
 
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+ 
+    public AppUser getMonitor() {
+        return monitor;
+    }
+
+    public void setMonitor(AppUser monitor) {
+        this.monitor = monitor;
+    }
+    
+    
+
     public String getLabel() {
         return label;
     }
@@ -80,42 +125,34 @@ public class CourseMaterial implements Serializable {
         this.label = label;
     }
 
-    public Short getFiles() {
-        return files;
-    }
-
-    public void setFiles(Short files) {
-        this.files = files;
-    }
-
+    @JsonProperty
     public Date getUploadDate() {
         return uploadDate;
     }
 
+    @JsonIgnore
     public void setUploadDate(Date uploadDate) {
         this.uploadDate = uploadDate;
     }
 
-    public Date getDescription() {
-        return description;
-    }
-
-    public void setDescription(Date description) {
-        this.description = description;
-    }
-
+    @JsonIgnore
     public List<MyCourseMaterial> getMyCourseMaterialList() {
         return myCourseMaterialList;
     }
 
+    @JsonIgnore
     public void setMyCourseMaterialList(List<MyCourseMaterial> myCourseMaterialList) {
         this.myCourseMaterialList = myCourseMaterialList;
     }
 
+    
+    @JsonProperty
     public AppUser getAppUser() {
         return monitor;
     }
-
+    
+    
+    @JsonIgnore
     public void setAppUser(AppUser monitor) {
         this.monitor = monitor;
     }
@@ -144,5 +181,5 @@ public class CourseMaterial implements Serializable {
     public String toString() {
         return "com.mycompany.test.entities.CourseMaterial[ id=" + id + " ]";
     }
-    
+
 }
