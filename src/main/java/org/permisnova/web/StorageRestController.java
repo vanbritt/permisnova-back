@@ -102,8 +102,7 @@ public class StorageRestController {
     public byte[] getFile(@PathVariable String filename) throws IOException {
         System.out.println("good");
         Resource file = storageService.loadFile(filename);
-        byte[] files= Files.readAllBytes(Paths.get(file.getURL().getPath()));
-        
+        byte[] files= Files.readAllBytes(Paths.get(file.getFile().getAbsolutePath()));
         System.out.println(file.getURL());
                 
         return files;
