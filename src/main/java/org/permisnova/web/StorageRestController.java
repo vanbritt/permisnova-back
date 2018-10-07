@@ -7,6 +7,8 @@ package org.permisnova.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -97,14 +99,14 @@ public class StorageRestController {
     
     @GetMapping("/coursematerial/monitor/{filename:.+}")
     @ResponseBody
-    public ResponseEntity<Resource> getFile(@PathVariable String filename) throws IOException {
+    public byte[] getFile(@PathVariable String filename) throws IOException {
         System.out.println("good");
         Resource file = storageService.loadFile(filename);
+        byte[] files= Files.readAllBytes(Paths.get(file.getURL().getPath()));
+        
         System.out.println(file.getURL());
                 
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
-                .body(file);
+        return files;
     }
     
 
